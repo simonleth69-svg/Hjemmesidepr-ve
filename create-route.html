@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lav Rute - Brabrand Walks</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="create-route.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="logo.png" alt="Brabrand Walks Logo" class="logo-img">
+                <h1>Brabrand Walks</h1>
+            </div>
+            <nav class="navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Hjem</a></li>
+                    <li><a href="create-route.html" class="nav-link active">Opret Rute</a></li>
+                    <li><a href="popular-walks.html" class="nav-link">Populære Ture</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content create-route-main">
+        <div class="create-route-container">
+            <div class="page-header">
+                <h2>Lav din egen rute</h2>
+                <p>Design en brugerdefineret vandrerute i Brabrand</p>
+            </div>
+
+            <form id="routeForm" class="route-form">
+                <!-- Route Details Card -->
+                <div class="form-card">
+                    <div class="card-header">
+                        <h3>Rute Detaljer</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="form-group">
+                            <label for="routeName">Rute Navn</label>
+                            <input type="text" id="routeName" name="routeName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Lokation</label>
+                            <input type="text" id="location" name="location" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Beskrivelse</label>
+                            <textarea id="description" name="description" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="distance">Distance</label>
+                                <input type="text" id="distance" name="distance" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="duration">Varighed</label>
+                                <input type="text" id="duration" name="duration" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Dato</label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="time">Start Tid</label>
+                                <input type="time" id="time" name="time" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="difficulty">Sværhedsgrad</label>
+                            <select id="difficulty" name="difficulty" required>
+                                <option value="">Vælg sværhedsgrad</option>
+                                <option value="Easy">Let</option>
+                                <option value="Moderate">Moderat</option>
+                                <option value="Challenging">Udfordrende</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="reset" class="btn btn-secondary">Ryd</button>
+                    <button type="submit" class="btn btn-success">Opret Rute</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="script.js"></script>
+    <script src="create-route.js"></script>
+</body>
+</html>
