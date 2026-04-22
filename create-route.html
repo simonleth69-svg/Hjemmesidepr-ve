@@ -6,6 +6,7 @@
     <title>Lav Rute - Brabrand Walks</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="create-route.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
     <!-- Header -->
@@ -19,7 +20,7 @@
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-link">Hjem</a></li>
                     <li><a href="create-route.html" class="nav-link active">Opret Rute</a></li>
-                    <li><a href="popular-walks.html" class="nav-link">Populære Ture</a></li>
+                    <li><a href="popular-walks.html" class="nav-link">Vores Ture</a></li>
                 </ul>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -60,6 +61,15 @@
                             <textarea id="description" name="description" rows="4" required></textarea>
                         </div>
 
+                        <div class="form-group">
+                            <label>Tegn din rute</label>
+                            <div id="map" style="height: 400px; border-radius: 8px;"></div>
+                        </div>
+
+                        <button type="button" class="btn btn-secondary" id="undoBtn">
+                             Fortryd sidste punkt
+                        </button>
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="distance">Distance</label>
@@ -83,16 +93,6 @@
                                 <input type="time" id="time" name="time" required>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="difficulty">Sværhedsgrad</label>
-                            <select id="difficulty" name="difficulty" required>
-                                <option value="">Vælg sværhedsgrad</option>
-                                <option value="Easy">Let</option>
-                                <option value="Moderate">Moderat</option>
-                                <option value="Challenging">Udfordrende</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
 
@@ -104,6 +104,7 @@
             </form>
         </div>
     </main>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
     <script src="create-route.js"></script>
 </body>

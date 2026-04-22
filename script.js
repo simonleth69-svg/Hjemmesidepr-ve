@@ -6,7 +6,6 @@ const monthlyWalksData = [
         time: '08:00',
         location: 'Brabrand Sø',
         distance: '7.2 km',
-        difficulty: 'Let'
     },
     {
         id: 2,
@@ -15,7 +14,6 @@ const monthlyWalksData = [
         time: '10:00',
         location: 'Skovvej',
         distance: '5.5 km',
-        difficulty: 'Let'
     },
     {
         id: 3,
@@ -24,7 +22,6 @@ const monthlyWalksData = [
         time: '18:30',
         location: 'City Park',
         distance: '3.8 km',
-        difficulty: 'Let'
     },
     {
         id: 4,
@@ -33,7 +30,6 @@ const monthlyWalksData = [
         time: '09:00',
         location: 'Natur og Kultur',
         distance: '9.1 km',
-        difficulty: 'Moderat'
     }
 ];
 
@@ -47,13 +43,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Load routes saved by user
 function loadSavedRoutes() {
-    const saved = localStorage.getItem('brabrandWalks_userRoutes');
+    const saved = localStorage.getItem("brabrandWalks_userRoutes");
+
     if (saved) {
         try {
             const userRoutes = JSON.parse(saved);
             monthlyWalksData.push(...userRoutes);
-        } catch (error) {
-            console.error('Error loading routes:', error);
+        } catch (e) {
+            console.error(e);
         }
     }
 }
@@ -82,33 +79,16 @@ function saveRouteToLocalStorage(routeData) {
     monthlyWalksData.push(newRoute);
 }
 
-// Convert difficulty level to Danish and get CSS class
-function getDifficultyInfo(difficulty) {
-    const difficultyMap = {
-        'Let': { danish: 'Let', cssClass: 'easy' },
-        'Moderat': { danish: 'Moderat', cssClass: 'moderate' },
-        'Udfordrende': { danish: 'Udfordrende', cssClass: 'challenging' },
-        'Easy': { danish: 'Let', cssClass: 'easy' },
-        'Moderate': { danish: 'Moderat', cssClass: 'moderate' },
-        'Challenging': { danish: 'Udfordrende', cssClass: 'challenging' }
-    };
-    return difficultyMap[difficulty] || { danish: difficulty, cssClass: 'easy' };
-}
-
 // Display all walks on home page
 function displayWalks() {
     const walksList = document.getElementById('walksList');
     if (!walksList) return;
     
     walksList.innerHTML = monthlyWalksData.map(walk => {
-        const diffInfo = getDifficultyInfo(walk.difficulty);
         return `
         <div class="walk-card">
             <div class="walk-card-header">
                 <h3 class="walk-card-title">${walk.title}</h3>
-                <span class="difficulty-badge difficulty-${diffInfo.cssClass}">
-                    ${diffInfo.danish}
-                </span>
             </div>
             <div class="walk-card-details">
                 <div class="walk-detail">

@@ -1,89 +1,132 @@
-const form = document.getElementById('routeForm');
+let map;
+let route = [];
+let polyline;
+let markers = [];
 
-// When page loads
-document.addEventListener('DOMContentLoaded', function() {
+// ---------------- INIT ----------------
+document.addEventListener("DOMContentLoaded", function () {
+    initMap();
     setupForm();
     setDefaultDate();
+
+    const undoBtn = document.getElementById("undoBtn");
+    if (undoBtn) undoBtn.addEventListener("click", undoLastPoint);
 });
 
-// Set today's date as default
+// ---------------- MAP ----------------
+function initMap() {
+    map = L.map("map").setView([56.15, 10.20], 13);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap"
+    }).addTo(map);
+
+    polyline = L.polyline([], { color: "green" }).addTo(map);
+
+    // ✅ ONLY map click (no DOM blocking!)
+    map.on("click", addPoint);
+}
+
+// ---------------- ADD POINT ----------------
+function addPoint(e) {
+    const point = [e.latlng.lat, e.latlng.lng];
+
+    route.push(point);
+
+    polyline.setLatLngs(route);
+
+    // marker (kan fjernes hvis du ikke vil have “blå prikker”)
+    const marker = L.circleMarker(point, {
+        radius: 5,
+        color: "green",
+        fillColor: "green",
+        fillOpacity: 0.8
+    }).addTo(map);
+
+    markers.push(marker);
+
+    updateDistanceField();
+}
+
+// ---------------- DATE ----------------
 function setDefaultDate() {
-    const dateInput = document.getElementById('date');
+    const dateInput = document.getElementById("date");
     if (dateInput) {
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.value = today;
+        dateInput.value = new Date().toISOString().split("T")[0];
     }
 }
 
-// Setup form events
+// ---------------- DISTANCE ----------------
+function updateDistanceField() {
+    const field = document.getElementById("distance");
+    if (!field) return;
+
+    if (route.length < 2) {
+        field.value = "0 km";
+        return;
+    }
+
+    let total = 0;
+
+    for (let i = 1; i < route.length; i++) {
+        total += map.distance(route[i - 1], route[i]);
+    }
+
+    field.value = (total / 1000).toFixed(2) + " km";
+}
+
+// ---------------- UNDO ----------------
+function undoLastPoint() {
+    if (route.length === 0) return;
+
+    route.pop();
+
+    const marker = markers.pop();
+    if (marker) map.removeLayer(marker);
+
+    polyline.setLatLngs(route);
+
+    updateDistanceField();
+}
+
+// ---------------- FORM ----------------
 function setupForm() {
+    const form = document.getElementById("routeForm");
     if (!form) return;
-    form.addEventListener('submit', submitForm);
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const newRoute = {
+            id: Date.now(),
+            title: document.getElementById("routeName").value,
+            location: document.getElementById("location").value,
+            description: document.getElementById("description").value,
+            distance: document.getElementById("distance").value,
+            date: document.getElementById("date").value,
+            time: document.getElementById("time").value,
+            coordinates: route
+        };
+
+        saveRoute(newRoute);
+
+        alert("Rute gemt!");
+
+        // reset state (IMPORTANT)
+        route = [];
+        polyline.setLatLngs([]);
+        markers.forEach(m => map.removeLayer(m));
+        markers = [];
+
+        window.location.href = "index.html";
+    });
 }
 
-// Submit form
-function submitForm(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('routeName');
-    const location = document.getElementById('location');
-    const desc = document.getElementById('description');
-    const dist = document.getElementById('distance');
-    const dur = document.getElementById('duration');
-    const dateInput = document.getElementById('date');
-    const timeInput = document.getElementById('time');
-    const diff = document.getElementById('difficulty');
-    
-    if (!name || !location || !desc || !dist || !dur || !dateInput || !timeInput || !diff) {
-        alert('Missing form elements');
-        return;
-    }
-    
-    const nameVal = name.value.trim();
-    const locVal = location.value.trim();
-    const descVal = desc.value.trim();
-    const distVal = dist.value.trim();
-    const durVal = dur.value.trim();
-    const dateVal = dateInput.value;
-    const timeVal = timeInput.value;
-    const diffVal = diff.value;
-    
-    if (!nameVal || !locVal || !descVal || !distVal || !durVal || !dateVal || !timeVal || !diffVal) {
-        alert('Please fill in all fields');
-        return;
-    }
-    
-    // Convert date format
-    const dateObj = new Date(dateVal);
-    const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    
-    // Keep time in 24-hour format (HH:MM)
-    const formattedTime = timeVal;
-    
-    const newRoute = {
-        title: nameVal,
-        date: formattedDate,
-        time: formattedTime,
-        location: locVal,
-        distance: distVal,
-        difficulty: diffVal,
-        description: descVal
-    };
-    
-    try {
-        saveRouteToLocalStorage(newRoute);
-        alert('Route created! Redirecting to home...');
-        
-        form.reset();
-        setDefaultDate();
-        
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1500);
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error saving route. Please try again.');
-    }
-}
+// ---------------- SAVE ----------------
+function saveRoute(routeData) {
+    const saved = JSON.parse(localStorage.getItem("brabrandWalks_userRoutes") || "[]");
 
-console.log('Create Route loaded!');
+    saved.push(routeData);
+
+    localStorage.setItem("brabrandWalks_userRoutes", JSON.stringify(saved));
+}
