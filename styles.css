@@ -1,0 +1,515 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* ===========================
+   HEADER & NAVIGATION
+   =========================== */
+
+.header {
+    border-bottom: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.logo-img {
+    width: 7rem;
+    height: 7rem;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.navigation {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #16a34a;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #16a34a;
+}
+
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 0.35rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.mobile-menu-btn span {
+    width: 1.5rem;
+    height: 2px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translateY(10px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-10px);
+}
+
+/* ===========================
+   MAIN CONTENT
+   =========================== */
+
+.main-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 3rem 1.5rem;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2rem;
+}
+
+.section-title {
+    font-size: 1.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+/* ===========================
+   MONTHLY WALKS SECTION
+   =========================== */
+
+.monthly-walks-section {
+    grid-column: 1;
+}
+
+.walks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.walk-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.walk-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #d4d4d4;
+    transform: translateY(-2px);
+}
+
+.walk-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.walk-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.difficulty-badge {
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.difficulty-easy {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.difficulty-moderate {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.difficulty-challenging {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.walk-card-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.walk-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.walk-detail-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #16a34a;
+    flex-shrink: 0;
+    stroke-width: 2;
+    font-size: 1.25rem;
+}
+
+.walk-detail-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.walk-detail-label {
+    font-size: 0.75rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.walk-detail-value {
+    color: #333;
+    font-weight: 500;
+}
+
+.walk-card-description {
+    padding: 1rem 0 0;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border-top: 1px solid #e5e5e5;
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+/* ===========================
+   ABOUT SECTION
+   =========================== */
+
+.about-section {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.about-card {
+    background-color: #f0fdf4;
+    border-radius: 0.5rem;
+    padding: 2rem 1.5rem;
+    position: sticky;
+    top: 90px;
+    border: 1px solid #dcfce7;
+}
+
+.about-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.about-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.about-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.about-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #333;
+}
+
+.about-card p {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+.about-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===========================
+   FOOTER
+   =========================== */
+
+.footer {
+    background-color: #f9fafb;
+    border-top: 1px solid #e5e5e5;
+    padding: 2rem 1.5rem;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+    color: #666;
+}
+
+.footer-content p {
+    margin: 0;
+}
+
+.copyright {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    color: #999;
+}
+
+/* ===========================
+   RESPONSIVE DESIGN
+   =========================== */
+
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .about-section {
+        grid-column: 1;
+    }
+
+    .about-card {
+        position: relative;
+        top: auto;
+        margin-top: 2rem;
+    }
+
+    .walk-card-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        padding: 1rem;
+    }
+
+    .navigation {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #ffffff;
+        flex-direction: column;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 1rem;
+        z-index: 999;
+    }
+
+    .navigation.active {
+        display: flex;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-link.active::after {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .main-content {
+        padding: 2rem 1rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .logo h1 {
+        font-size: 1.25rem;
+    }
+
+    .logo-img {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .walk-card-details {
+        gap: 1rem;
+    }
+
+    .about-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-container {
+        padding: 0.75rem;
+    }
+
+    .logo {
+        gap: 0.5rem;
+    }
+
+    .logo h1 {
+        font-size: 1.125rem;
+    }
+
+    .logo-img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .main-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .walk-card {
+        padding: 1rem;
+    }
+
+    .walk-card-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .walk-card-details {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .about-card {
+        padding: 1.25rem 1rem;
+    }
+
+    .about-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .about-card h3 {
+        font-size: 1.125rem;
+    }
+
+    .about-card p {
+        font-size: 0.8rem;
+    }
+}
